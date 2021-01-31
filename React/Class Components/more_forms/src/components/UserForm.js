@@ -22,6 +22,7 @@ const UserForm = () => {
             else {
                 setFirstNameError("");
                 setFirstName(e.target.value);
+                console.log(firstName);
             }
         }
 
@@ -60,7 +61,7 @@ const UserForm = () => {
             setPasswordError("Password and/or Confirm Password is Required");
         else if (e.target.value.length < 8)
             setPasswordError("Password and/or Confirm Password must be 8 characters or longer!");
-        else if (password !== confirmPassword)
+        else if (password !== e.target.value)
             setPasswordError("Password and Confirm Password must match");
         else
             setPasswordError("");
