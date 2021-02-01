@@ -1,5 +1,3 @@
-
-
 const DisplayBox = props => {
     const boxStyle = {
         background: props.color,
