@@ -8,7 +8,7 @@ const PokemonApi = () =>{
             .then(response => {
                 return response.json();
             }).then(response => {
-            setPokemon(response.results.map(item => item.name));
+            setPokemon(response.results);
         }).catch(err=>{
             console.log(err);
         });
@@ -18,7 +18,7 @@ const PokemonApi = () =>{
             <button onClick={ handleClick }>Fetch Pokemon</button>
             <ol>
                 {
-                    pokemon.map( (item, index) => <li key={index}>{item}</li>)
+                    pokemon.map( (item, index) => <li key={index}>{item.name}</li>)
                 }
             </ol>
         </>
