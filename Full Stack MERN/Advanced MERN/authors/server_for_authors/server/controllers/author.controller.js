@@ -19,7 +19,7 @@ module.exports.findAuthor = (request, response) => {
 }
 
 module.exports.updateAuthor = (request, response) => {
-    Author.findOneAndUpdate({_id: request.params.id}, request.body, {new:true})
+    Author.findOneAndUpdate({_id: request.params.id}, request.body, {new:true, runValidators: true})
         .then(updatedAuthor => response.json(updatedAuthor))
         .catch(err => response.json(err))
 }
