@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import DeleteButton from "./DeleteButton";
 
-const PlayerStatus = () => {
+import {Link} from "@reach/router";
+
+const PlayerStatus = props => {
     const [players, setPlayers] = useState([])
     const [updatedPlayer, setUpdatedPlayer] = useState([])
-    const [playerStatus, setPlayerStatus] = useState("")
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/getAllPlayers")
@@ -13,26 +13,37 @@ const PlayerStatus = () => {
             .catch(error => console.log("There was an issue: ", error))
     }, [updatedPlayer]);
 
-
-    const updateStatus = (player) => {
-        axios.put("http://localhost:8000/api/player/" + player[0], {
-            playerName: player[1],
-            preferredPosition: player[2],
-            playerStatus: player[3]
+    const onClickHandler = (e, playerId, playerName, preferredPosition, playerStatus) => {
+        e.preventDefault();
+        console.log(e.target.id)
+        axios.put("http://localhost:8000/api/player/" + playerId, {
+            playerName,
+            preferredPosition,
+            playerStatus
         })
             .then(response => setUpdatedPlayer((response.data)))
             .catch(error => console.log("There was an issue: ", error))
+    };
+
+    const green = (playerStatus) => {
+        if (playerStatus === "Playing")
+            return "green";
     }
 
+    const red = (playerStatus) => {
+        if (playerStatus === "Not Playing")
+            return "red";
+    }
 
-    const onClickHandler = e => {
-        e.preventDefault();
-        const playerToUpdate = e.target.value.split(",");
-        updateStatus(playerToUpdate);
-    };
+    const yellow = (playerStatus) => {
+        if (playerStatus === "Undecided")
+            return "yellow";
+    }
 
     return(
         <>
+            <h1>Player Status - Game {props.gameId}</h1>
+            <Link to={"/status/game/1"}>Game 1</Link> | <Link to={"/status/game/2"}>Game 2</Link> | <Link to={"/status/game/3"}>Game 3</Link> |
             { players.length > 0 ?
                 <table className="table table-striped">
                     <thead>
@@ -52,9 +63,9 @@ const PlayerStatus = () => {
                                     <td>{player.playerName}</td>
                                     <td>{player.playerStatus}</td>
                                     <td>
-                                        <button onClick={ onClickHandler } value={[player._id, player.playerName, player.preferredPosition, "Playing"]}>Playing</button>
-                                        <button onClick={ onClickHandler } value={[player._id, player.playerName, player.preferredPosition, "Not Playing"]}>Not Playing</button>
-                                        <button onClick={ onClickHandler } value={[player._id, player.playerName, player.preferredPosition, "Undecided"]}>Undecided</button>
+                                        <button style={ {background:green(player.playerStatus)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, "Playing") }>Playing</button>
+                                        <button style={ {background:red(player.playerStatus)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, "Not Playing") }>Not Playing</button>
+                                        <button style={ {background:yellow(player.playerStatus)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, "Undecided") }>Undecided</button>
                                     </td>
                                 </tr>
                             )

@@ -46,7 +46,7 @@ const AddPlayerForm = () => {
                     <ul>{ errors.map((err, index) => <small key={index} style={{color:"red"}}><li>{err}</li></small>) }</ul>
                 </div>
             </div>
-            <div className="row">
+            <div className="row" style={{justifyContent: "center"}}>
                 <div className="col-6">
                     <form onSubmit={ onSubmit }>
                         <div className="form-group">
