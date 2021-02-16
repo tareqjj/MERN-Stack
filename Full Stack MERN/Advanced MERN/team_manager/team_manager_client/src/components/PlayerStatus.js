@@ -15,7 +15,6 @@ const PlayerStatus = props => {
 
     const onClickHandler = (e, playerId, playerName, preferredPosition, playerStatus) => {
         e.preventDefault();
-        console.log(e.target.id)
         axios.put("http://localhost:8000/api/player/" + playerId, {
             playerName,
             preferredPosition,
