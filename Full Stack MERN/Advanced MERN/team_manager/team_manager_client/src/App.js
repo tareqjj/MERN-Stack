@@ -2,7 +2,8 @@ import './App.css';
 import {Redirect, Router} from "@reach/router";
 import HeaderNav from "./components/HeaderNav";
 import MenuOptions from "./components/MenuOptions";
-import PlayerStatus from "./components/PlayerStatus";
+import GameStatusOne from "./components/GameStatusOne";
+import GameOptions from "./components/GameOptions";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <Router>
             <Redirect to={"/players/list"} from={"/"} noThrow/>
             <MenuOptions path={"players/*"}/>
-            <PlayerStatus path={"/status/game/:gameId"}/>
+            <GameOptions path={"status/game/*"}/>
         </Router>
     </div>
   );

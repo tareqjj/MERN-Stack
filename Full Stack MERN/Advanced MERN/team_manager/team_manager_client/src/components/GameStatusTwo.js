@@ -1,9 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-import {Link} from "@reach/router";
-
-const PlayerStatus = props => {
+const GameStatusTwo = props => {
     const [players, setPlayers] = useState([])
     const [updatedPlayer, setUpdatedPlayer] = useState([])
 
@@ -13,12 +11,16 @@ const PlayerStatus = props => {
             .catch(error => console.log("There was an issue: ", error))
     }, [updatedPlayer]);
 
-    const onClickHandler = (e, playerId, playerName, preferredPosition, playerStatus) => {
+    const onClickHandler = (e, playerId, playerName, preferredPosition, gameOne, gameThree, UpdatedPlayerStatus) => {
         e.preventDefault();
         axios.put("http://localhost:8000/api/player/" + playerId, {
             playerName,
             preferredPosition,
-            playerStatus
+            playerStatus: {
+                game1: gameOne,
+                game2: UpdatedPlayerStatus,
+                game3: gameThree
+            }
         })
             .then(response => setUpdatedPlayer((response.data)))
             .catch(error => console.log("There was an issue: ", error))
@@ -41,8 +43,7 @@ const PlayerStatus = props => {
 
     return(
         <>
-            <h1>Player Status - Game {props.gameId}</h1>
-            <Link to={"/status/game/1"}>Game 1</Link> | <Link to={"/status/game/2"}>Game 2</Link> | <Link to={"/status/game/3"}>Game 3</Link> |
+            <h1>Player Status - Game 2</h1>
             { players.length > 0 ?
                 <table className="table table-striped">
                     <thead>
@@ -60,11 +61,11 @@ const PlayerStatus = props => {
                                 <tr key={index}>
                                     <th scope="row">{index + 1}</th>
                                     <td>{player.playerName}</td>
-                                    <td>{player.playerStatus}</td>
+                                    <td>{player.playerStatus.game2}</td>
                                     <td>
-                                        <button style={ {background:green(player.playerStatus)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, "Playing") }>Playing</button>
-                                        <button style={ {background:red(player.playerStatus)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, "Not Playing") }>Not Playing</button>
-                                        <button style={ {background:yellow(player.playerStatus)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, "Undecided") }>Undecided</button>
+                                        <button style={ {background:green(player.playerStatus.game2)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, player.playerStatus.game1, player.playerStatus.game3, "Playing") }>Playing</button>
+                                        <button style={ {background:red(player.playerStatus.game2)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, player.playerStatus.game1, player.playerStatus.game3, "Not Playing") }>Not Playing</button>
+                                        <button style={ {background:yellow(player.playerStatus.game2)} } onClick={ (e) => onClickHandler(e, player._id, player.playerName, player.preferredPosition, player.playerStatus.game1, player.playerStatus.game3, "Undecided") }>Undecided</button>
                                     </td>
                                 </tr>
                             )
@@ -78,4 +79,4 @@ const PlayerStatus = props => {
     )
 };
 
-export default PlayerStatus;
+export default GameStatusTwo;
