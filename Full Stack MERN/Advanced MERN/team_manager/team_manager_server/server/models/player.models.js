@@ -11,8 +11,18 @@ const PlayerSchema = new mongoose.Schema({
         required: [false, "Preferred position is optional"],
     },
     playerStatus: {
-        type: String,
-        default: "undecided"
+        game1: {
+            type: "String",
+            default: "Undecided"
+        },
+        game2: {
+            type: "String",
+            default: "Undecided"
+        },
+        game3: {
+            type: "String",
+            default: "Undecided"
+        }
     }
 }, {timestamps: true});
 
