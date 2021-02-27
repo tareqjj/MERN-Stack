@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MongoDB - mern-auth@localhost">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.20">
+    <root id="1">
+      <ServerVersion>4.4.3</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="admin"/>
+    <schema id="3" parent="1" name="auth"/>
+    <schema id="4" parent="1" name="config"/>
+    <schema id="5" parent="1" name="local"/>
+    <schema id="6" parent="1" name="mern-auth">
+      <Current>1</Current>
+    </schema>
+    <schema id="7" parent="1" name="team_manager"/>
+    <schema id="8" parent="1" name="voting_webapp"/>
+  </database-model>
+</dataSource>
